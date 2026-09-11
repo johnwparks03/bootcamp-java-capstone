@@ -34,9 +34,11 @@ public class User extends AuditableEntity{
     @Column(name="phone_number", nullable = false)
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="role", nullable = false)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="membership_status", nullable = false)
     private MembershipStatus membershipStatus;
 
