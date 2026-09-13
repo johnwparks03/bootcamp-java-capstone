@@ -22,6 +22,26 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
+    @ExceptionHandler(ReservationLimitExceededException.class)
+    public ResponseEntity<ReservationLimitExceededErrorResponse> handleReservationLimitExceeded(ReservationLimitExceededException exception){
+        ReservationLimitExceededErrorResponse response = new ReservationLimitExceededErrorResponse(
+                "RESERVATION_LIMIT_EXCEEDED",
+                exception.getMessage(),
+                5
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(BookUnavailableException.class)
+    public ResponseEntity<BookUnavailableErrorResponse> handleReservationLimitExceeded(BookUnavailableException exception){
+        BookUnavailableErrorResponse response = new BookUnavailableErrorResponse(
+                "BOOK_UNAVAILABLE",
+                exception.getMessage(),
+                0
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
     @ExceptionHandler(ProfileNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleProfileNotFound(ProfileNotFoundException exception){
         ErrorResponse response = new ErrorResponse(
