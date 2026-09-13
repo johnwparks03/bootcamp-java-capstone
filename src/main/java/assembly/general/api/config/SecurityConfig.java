@@ -35,6 +35,10 @@ public class SecurityConfig {
                                 HttpMethod.GET,
                                 "/api/users/profile"
                         ).authenticated()
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/reservations"
+                        ).authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
