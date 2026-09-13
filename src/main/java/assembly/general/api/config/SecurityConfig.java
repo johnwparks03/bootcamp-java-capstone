@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/catalog/**").permitAll()
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/users/profile"

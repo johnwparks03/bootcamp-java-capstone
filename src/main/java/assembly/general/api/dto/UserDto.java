@@ -16,9 +16,7 @@ public class UserDto {
     private String email;
     private String firstName;
     private String lastName;
-    private String phoneNumber;
-    private MembershipStatus membershipStatus;
-    private LocalDateTime memberSinceDate;
+    private Role role;
 
     public UserDto() {}
 
@@ -27,15 +25,13 @@ public class UserDto {
             String email,
             String firstName,
             String lastName,
-            String phoneNumber,
-            MembershipStatus membershipStatus){
+            Role role
+    ){
         this();
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.membershipStatus = membershipStatus;
-        this.memberSinceDate = LocalDateTime.now();
+        this.role = role;
     }
 }
