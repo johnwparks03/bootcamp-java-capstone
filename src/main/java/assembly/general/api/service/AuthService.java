@@ -63,7 +63,7 @@ public class AuthService {
     @Transactional(readOnly = true)
     public AuthResponse login(LoginRequest request){
         try{
-            Optional<User> userOpt = findUserByEmail(request.getEmail());
+            Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
 
             if(userOpt.isEmpty()){
                 return AuthResponse.failure("Incorrect email or password");
@@ -94,15 +94,6 @@ public class AuthService {
         User user = userOpt.get();
         UserDto userDto = convertUserToUserDto(user);
         return Optional.of(userDto);
-    }
-
-    private Optional<User> findUserByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null){
-            return Optional.of(user);
-        }
-
-        return Optional.empty();
     }
 
     private UserDto convertUserToUserDto(User user) {
