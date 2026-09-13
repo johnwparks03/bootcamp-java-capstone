@@ -31,7 +31,7 @@ public class AuthService {
 
     public RegisterResponse register(RegisterRequest request){
         if(userRepository.existsByEmail(request.getEmail())) {
-            throw new EmailAlreadyExistsException("User registration failed. If a user exists for this email, we'll send instructions to sign in or reset your password.");
+            throw new EmailAlreadyExistsException();
         }
 
         String hashedPassword = passwordEncoder.encode(request.getPassword());
