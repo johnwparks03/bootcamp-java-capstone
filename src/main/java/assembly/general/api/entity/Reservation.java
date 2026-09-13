@@ -38,12 +38,15 @@ public class Reservation extends AuditableEntity{
     @Column(name="expires_at", nullable = false)
     private LocalDateTime expiresAt;
 
+    //TO-DO make it so this can't be null when the status chanegs to checked out
     @Column(name="checked_out_at")
     private LocalDateTime checkedOutAt;
 
-    @Column(name="due_date", nullable = false)
+    //TO-DO make it so this can't be null when the status chanegs to checked out
+    @Column(name="due_date")
     private LocalDateTime dueDate;
 
+    //TO-DO make it so this can't be null when the status chanegs to returned
     @Column(name="returned_at")
     private LocalDateTime returnedAt;
 
@@ -65,7 +68,7 @@ public class Reservation extends AuditableEntity{
     @Column(name="created_at")
     private Instant createdAt;
 
-    protected Reservation(){};
+    public Reservation(){};
 
     public Reservation(
             Book book,
