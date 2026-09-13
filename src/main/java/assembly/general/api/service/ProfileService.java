@@ -28,8 +28,8 @@ public class ProfileService {
         }
         User user = userOpt.get();
 
-        Integer activeReservations = reservationRepository.getUserActiveReservations(user.getId()).intValue();
-        Integer borrowingHistory = reservationRepository.getUserBorrowingHistory(user.getId()).intValue();
+        Integer activeReservations = reservationRepository.getUserActiveReservationsCount(user.getId()).intValue();
+        Integer borrowingHistory = reservationRepository.getUserBorrowingHistoryCount(user.getId()).intValue();
 
         ProfileDto profile = new ProfileDto(
                 user.getId(),

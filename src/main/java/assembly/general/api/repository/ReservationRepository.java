@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -16,7 +17,15 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
     WHERE r.user.id = :userId
       AND r.status IN ('RESERVED', 'CHECKED_OUT')
     """)
-    Long getUserActiveReservations(@Param("userId") UUID userId);
+    Long getUserActiveReservationsCount(@Param("userId") UUID userId);
+
+    @Query("""
+    SELECT r
+    FROM Reservation r
+    WHERE r.user.id = :userId
+      AND r.status IN ('RESERVED', 'CHECKED_OUT')
+    """)
+    List<Reservation> getUserActiveReservations(@Param("userId") UUID userId);
 
     @Query("""
     SELECT COUNT(r)
@@ -24,5 +33,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
     WHERE r.user.id = :userId
       AND r.status IN ('RETURNED')
     """)
-    Long getUserBorrowingHistory(@Param("userId") UUID userId);
+    Long getUserBorrowingHistoryCount(@Param("userId") UUID userId);
 }
