@@ -43,6 +43,26 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    @ExceptionHandler(ForbiddenNotLibrarianException.class)
+    public ResponseEntity<ErrorResponse> handleForbiddenNotLibrarian(ForbiddenNotLibrarianException exception){
+        ErrorResponse response = new ErrorResponse(
+                "FORBIDDEN",
+                exception.getMessage(),
+                Instant.now()
+        );
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
+    @ExceptionHandler(InvalidReservationStatusAtCheckoutException.class)
+    public ResponseEntity<InvalidReservationStatusAtCheckoutErrorResponse> handleInvalidStatusAtCheckout(InvalidReservationStatusAtCheckoutException exception){
+        InvalidReservationStatusAtCheckoutErrorResponse response = new InvalidReservationStatusAtCheckoutErrorResponse(
+                "INVALID_STATUS",
+                exception.getMessage(),
+                exception.getCurrentStatus()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
     @ExceptionHandler(ProfileNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleProfileNotFound(ProfileNotFoundException exception){
         ErrorResponse response = new ErrorResponse(
