@@ -1,8 +1,6 @@
 package assembly.general.api.controllers;
 
-import assembly.general.api.dto.AuthResponse;
-import assembly.general.api.dto.LoginRequest;
-import assembly.general.api.dto.RegisterRequest;
+import assembly.general.api.dto.*;
 import assembly.general.api.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,46 +26,17 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request, BindingResult bindingResult){
-        // Check for validation errors
-        if (bindingResult.hasErrors()) {
-            String errorMessage = bindingResult.getFieldErrors()
-                    .stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.joining(", "));
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request){
+        RegisterResponse response = authService.register(request);
 
-            return ResponseEntity.badRequest()
-                    .body(AuthResponse.failure("Validation failed: " + errorMessage));
-        }
-
-        AuthResponse response = authService.register(request);
-
-        if (response.isSuccess()) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } else {
-            return ResponseEntity.badRequest().body(response);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request, BindingResult bindingResult){
-        // Check for validation errors
-        if (bindingResult.hasErrors()) {
-            String errorMessage = bindingResult.getFieldErrors()
-                    .stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.joining(", "));
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request){
 
-            return ResponseEntity.badRequest()
-                    .body(AuthResponse.failure("Validation failed: " + errorMessage));
-        }
+        LoginResponse response = authService.login(request);
 
-        AuthResponse response = authService.login(request);
-
-        if (response.isSuccess()) {
-            return ResponseEntity.ok().body(response);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        }
+        return ResponseEntity.ok().body(response);
     }
 }
