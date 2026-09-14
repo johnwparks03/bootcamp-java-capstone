@@ -2,6 +2,7 @@ package assembly.general.api.controllers;
 
 import assembly.general.api.dto.*;
 import assembly.general.api.service.ReservationService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@Controller
+@SecurityRequirement(name = "bearerAuth")
+@RestController
 @RequestMapping("/api/reservations")
 @Validated
 public class ReservationController {

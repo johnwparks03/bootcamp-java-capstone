@@ -2,6 +2,7 @@ package assembly.general.api.controllers;
 
 import assembly.general.api.dto.ProfileDto;
 import assembly.general.api.service.ProfileService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+@SecurityRequirement(name="bearerAuth")
 @RestController
 @RequestMapping("/api/users")
 public class ProfileController {
