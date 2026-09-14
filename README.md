@@ -2,6 +2,31 @@
 
 ---
 
+## Steps to run locally
+
+1. Clone this repo
+    - `git clone https://github.com/johnwparks03/bootcamp-java-capstone.git`
+2. cd into the repository
+    - `cd bootcamp-java-capston`
+3. Start the application
+    - `./mvnw spring-boot:run`
+4. Open the application
+    - The application runs locally at [http://localhost:8080](http://localhost:8080)
+5. View the Swagger API documentation
+   - Use the [Swagger UI](http://localhost:8080/swagger-ui/index.html`) to review and test available endpoints
+   - For more detailed endpoint documentation view the [API Endpoint Documentation](docs/api-endpoints.md)
+6. Access the H2 database console
+   - Open the [H2 Console](http://localhost:8080/h2-console)
+   - Use these connection settings
+     - JDBC URL: jdbc:h2:mem:librarydb
+     - Username: sa
+     - Password: Leave blank
+7. Verify the application health
+   - Open the [health check endpoint](http://localhost:8080/api/health)
+   - A successful response should show 'Healthy!'
+
+---
+
 ## User Story Compliance
 
 See [User Stories](instructionDocs/user-stories.md) for user story information
@@ -48,8 +73,7 @@ See **[API documentation](docs/api-endpoints.md)** for further documentation
 Also see Swagger documentation for an interactive view of available endpoints
 
 - **Local Swagger UI:** `http://localhost:8080/swagger-ui/index.html`
-- **Production Swagger UI:** `<deployed-application-url>/swagger-ui/index.html`
-
+- 
 ---
 
 ## Technical Quality
@@ -69,3 +93,4 @@ Also see Swagger documentation for an interactive view of available endpoints
 - Real-time book availability tracking is working and tested
 - Late fee calculation is accurate and tested
 - Pagination and search is functional and allows users to search for books
+
