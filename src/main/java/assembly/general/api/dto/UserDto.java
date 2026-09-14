@@ -18,7 +18,6 @@ public class UserDto {
     private String lastName;
     private Role role;
 
-    public UserDto() {}
 
     public UserDto(
             UUID id,
@@ -27,7 +26,6 @@ public class UserDto {
             String lastName,
             Role role
     ){
-        this();
         this.id = id;
         this.email = email;
         this.firstName = firstName;
