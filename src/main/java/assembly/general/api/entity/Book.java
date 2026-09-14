@@ -86,4 +86,7 @@ public class Book extends AuditableEntity {
     public void decrementAvailableCopies(){
         this.availableCopies = this.availableCopies - 1;
     }
+    public void incrementAvailableCopies(){
+        this.availableCopies = this.availableCopies + 1;
+    }
 }

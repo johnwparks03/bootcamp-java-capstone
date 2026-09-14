@@ -1,5 +1,6 @@
 package assembly.general.api.entity;
 
+import assembly.general.api.dto.ReturnCondition;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +39,7 @@ public class Reservation extends AuditableEntity{
     @Column(name="expires_at", nullable = false)
     private LocalDateTime expiresAt;
 
-    //TO-DO make it so this can't be null when the status chanegs to checked out
+    //TO-DO make it so this can't be null when the status chanegs to checked out also have to enforec the 5 limit of active rule
     @Column(name="checked_out_at")
     private LocalDateTime checkedOutAt;
 
@@ -60,7 +61,7 @@ public class Reservation extends AuditableEntity{
     private BigDecimal lateFeeAmount;
 
     @Column(name="book_condition_at_return")
-    private String bookConditionAtReturn;
+    private ReturnCondition bookConditionAtReturn;
 
     @Column(name="notes")
     private String notes;
@@ -68,7 +69,9 @@ public class Reservation extends AuditableEntity{
     @Column(name="created_at")
     private Instant createdAt;
 
-    public Reservation(){};
+    public Reservation(){
+        this.createdAt = Instant.now();
+    };
 
     public Reservation(
             Book book,
@@ -82,7 +85,7 @@ public class Reservation extends AuditableEntity{
             Integer renewalCount,
             Integer lateDays,
             BigDecimal lateFeeAmount,
-            String bookConditionAtReturn,
+            ReturnCondition bookConditionAtReturn,
             String notes
     ){
         this.book = book;

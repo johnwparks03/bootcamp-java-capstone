@@ -8,7 +8,9 @@ import assembly.general.api.repository.ReservationRepository;
 import assembly.general.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -135,8 +137,8 @@ public class ReservationService {
         reservation.setStatus(ReservationStatus.CHECKED_OUT);
         reservation.setCheckedOutAt(LocalDateTime.now());
         reservation.setDueDate(LocalDateTime.now().plusDays(14));
-        if(!request.getNotes().isEmpty()){
-            reservation.setNotes(request.getNotes());
+        if (request.getNotes() != null && !request.getNotes().isBlank()) {
+            reservation.setNotes(request.getNotes().trim());
         }
         reservation = reservationRepository.save(reservation);
 
@@ -146,5 +148,67 @@ public class ReservationService {
                 reservation.getCheckedOutAt(),
                 reservation.getDueDate()
         );
+    }
+
+    public ReturnResponse returnBook(UUID userId, UUID reservationId, ReturnRequest request){
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isEmpty()){
+            throw new RuntimeException();
+        }
+        User user = userOpt.get();
+
+        if(user.getRole() != Role.LIBRARIAN){
+            throw new ForbiddenNotLibrarianException("return");
+        }
+
+        Optional<Reservation> reservationOpt = reservationRepository.findById(reservationId);
+        if(reservationOpt.isEmpty()){
+            throw new ReservationNotFoundException(reservationId);
+        }
+        Reservation reservation = reservationOpt.get();
+
+        if(reservation.getStatus() != ReservationStatus.CHECKED_OUT){
+            throw new InvalidReservationStatusException(reservation.getStatus());
+        }
+
+        Book book = reservation.getBook();
+        book.incrementAvailableCopies();
+        book = bookRepository.save(book);
+
+        LocalDateTime returnedDate = LocalDateTime.now();
+        reservation.setStatus(ReservationStatus.RETURNED);
+        reservation.setReturnedAt(returnedDate);
+        reservation.setBookConditionAtReturn(request.getCondition());
+        if (request.getNotes() != null && !request.getNotes().isBlank()) {
+            reservation.setNotes(request.getNotes().trim());
+        }
+        boolean late = returnedDate.isAfter(reservation.getDueDate()) ? true : false;
+        if(late){
+            Integer lateDays = Math.toIntExact(ChronoUnit.DAYS.between(reservation.getDueDate(), returnedDate));
+            reservation.setLateDays(lateDays);
+            reservation.setLateFeeAmount(new BigDecimal(lateDays));
+        }else{
+            reservation.setLateDays(0);
+            reservation.setLateFeeAmount(new BigDecimal(0));
+        }
+        reservation = reservationRepository.save(reservation);
+
+        if(late){
+            return new LateReturnResponse(
+                    reservation.getId(),
+                    reservation.getReturnedAt(),
+                    reservation.getDueDate(),
+                    reservation.getLateDays(),
+                    reservation.getLateFeeAmount()
+            );
+        } else {
+            return new OnTimeReturnResponse(
+                    reservation.getId(),
+                    reservation.getReturnedAt(),
+                    reservation.getLateDays(),
+                    reservation.getLateFeeAmount()
+            );
+        }
+
     }
 }

@@ -48,4 +48,13 @@ public class ReservationController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PostMapping("/{reservationId}/return")
+    public ResponseEntity<ReturnResponse> returnBook(Authentication authentication, @PathVariable UUID reservationId, @Valid @RequestBody ReturnRequest request){
+        UUID userId = UUID.fromString(authentication.getName());
+
+        ReturnResponse response = reservationService.returnBook(userId, reservationId, request);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

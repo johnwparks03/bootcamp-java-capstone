@@ -66,12 +66,11 @@ public class ReservationDataSeeder implements CommandLineRunner {
         Reservation reservation3 = new Reservation();
         reservation3.setBook(greatGatsby);
         reservation3.setUser(john);
-        reservation3.setStatus(ReservationStatus.RETURNED);
+        reservation3.setStatus(ReservationStatus.CHECKED_OUT);
         reservation3.setReservedAt(LocalDateTime.of(2026, 8, 1, 10, 0));
         reservation3.setExpiresAt(LocalDateTime.of(2026, 8, 8, 10, 0));
         reservation3.setCheckedOutAt(LocalDateTime.of(2026, 8, 2, 14, 0));
         reservation3.setDueDate(LocalDateTime.of(2026, 8, 16, 14, 0));
-        reservation3.setReturnedAt(LocalDateTime.of(2026, 8, 15, 9, 0));
 
         Reservation reservation4 = new Reservation();
         reservation4.setBook(headFirstJava);
