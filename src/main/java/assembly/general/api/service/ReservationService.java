@@ -119,7 +119,7 @@ public class ReservationService {
         User user = userOpt.get();
 
         if(user.getRole() != Role.LIBRARIAN){
-            throw new ForbiddenNotLibrarianException();
+            throw new ForbiddenNotLibrarianException("checkout");
         }
 
         Optional<Reservation> reservationOpt = reservationRepository.findById(reservationId);
@@ -129,7 +129,7 @@ public class ReservationService {
         Reservation reservation = reservationOpt.get();
 
         if(reservation.getStatus() != ReservationStatus.RESERVED){
-            throw new InvalidReservationStatusAtCheckoutException(reservation.getStatus());
+            throw new InvalidReservationStatusException(reservation.getStatus());
         }
 
         reservation.setStatus(ReservationStatus.CHECKED_OUT);

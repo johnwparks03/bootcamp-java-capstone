@@ -6,11 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InvalidReservationStatusAtCheckoutException extends RuntimeException{
+public class InvalidReservationStatusException extends RuntimeException{
     private ReservationStatus currentStatus;
 
-    public InvalidReservationStatusAtCheckoutException (ReservationStatus currentStatus) {
+    public InvalidReservationStatusException(ReservationStatus currentStatus) {
         this.currentStatus = currentStatus;
-        super("Can only checkout reservations with RESERVED status");
+        super("Can only checkout reservations with " + currentStatus + " status");
     }
 }

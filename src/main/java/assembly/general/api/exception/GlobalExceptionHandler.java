@@ -63,9 +63,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
-    @ExceptionHandler(InvalidReservationStatusAtCheckoutException.class)
-    public ResponseEntity<InvalidReservationStatusAtCheckoutErrorResponse> handleInvalidStatusAtCheckout(InvalidReservationStatusAtCheckoutException exception){
-        InvalidReservationStatusAtCheckoutErrorResponse response = new InvalidReservationStatusAtCheckoutErrorResponse(
+    @ExceptionHandler(InvalidReservationStatusException.class)
+    public ResponseEntity<InvalidReservationStatusErrorResponse> handleInvalidStatusAtCheckout(InvalidReservationStatusException exception){
+        InvalidReservationStatusErrorResponse response = new InvalidReservationStatusErrorResponse(
                 "INVALID_STATUS",
                 exception.getMessage(),
                 exception.getCurrentStatus()
