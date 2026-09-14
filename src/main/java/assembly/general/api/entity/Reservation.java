@@ -2,6 +2,7 @@ package assembly.general.api.entity;
 
 import assembly.general.api.dto.ReturnCondition;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertTrue;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,15 +40,12 @@ public class Reservation extends AuditableEntity{
     @Column(name="expires_at", nullable = false)
     private LocalDateTime expiresAt;
 
-    //TO-DO make it so this can't be null when the status chanegs to checked out also have to enforec the 5 limit of active rule
     @Column(name="checked_out_at")
     private LocalDateTime checkedOutAt;
 
-    //TO-DO make it so this can't be null when the status chanegs to checked out
     @Column(name="due_date")
     private LocalDateTime dueDate;
 
-    //TO-DO make it so this can't be null when the status chanegs to returned
     @Column(name="returned_at")
     private LocalDateTime returnedAt;
 
@@ -102,5 +100,21 @@ public class Reservation extends AuditableEntity{
         this.bookConditionAtReturn = bookConditionAtReturn;
         this.notes = notes;
         this.createdAt = Instant.now();
+    }
+
+    @AssertTrue(message = "checkedOutAt and dueDate are required when the reservation is checked out or returned")
+    public boolean isCheckoutDatesValid() {
+        boolean requiresDates = status == ReservationStatus.CHECKED_OUT;
+
+
+        return !requiresDates
+                || (checkedOutAt != null && dueDate != null);
+    }
+
+    @AssertTrue(message = "returnedAt, lateDays, and lateFeeAmount are required when the reservation returned")
+    public boolean areReturnedFieldsValid() {
+        boolean requiresFields = status == ReservationStatus.RETURNED;
+
+        return !requiresFields || (returnedAt != null && lateDays != null &&lateFeeAmount != null);
     }
 }
