@@ -9,8 +9,6 @@ import lombok.Setter;
 public class CheckoutRequest {
     private String notes;
 
-    public CheckoutRequest() {}
-
     public CheckoutRequest(String notes){
         this.notes = notes;
     }

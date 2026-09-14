@@ -15,8 +15,6 @@ public class BooksResponse {
     private Integer totalPages;
     private boolean last;
 
-    public BooksResponse() {}
-
     public BooksResponse(
             List<BookDto> content,
             Integer page,

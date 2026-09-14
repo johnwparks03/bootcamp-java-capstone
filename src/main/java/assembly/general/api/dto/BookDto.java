@@ -19,8 +19,6 @@ public class BookDto {
     private Integer availableCopies;
     private String status;
 
-    public BookDto() {}
-
     public BookDto(
             UUID bookId,
             String isbn,

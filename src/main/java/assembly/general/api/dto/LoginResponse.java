@@ -11,8 +11,6 @@ public class LoginResponse {
     private Integer expiresIn;
     private UserDto user;
 
-    public LoginResponse() {}
-
     public LoginResponse(
             String accessToken,
             String tokenType,

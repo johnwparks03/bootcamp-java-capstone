@@ -22,7 +22,6 @@ public class ProfileDto {
     private Integer activeReservations;
     private Integer borrowingHistory;
 
-    public ProfileDto() {}
 
     public ProfileDto(
             UUID id,
@@ -35,7 +34,6 @@ public class ProfileDto {
             Integer activeReservations,
             Integer borrowingHistory
     ){
-        this();
         this.id = id;
         this.email = email;
         this.firstName = firstName;

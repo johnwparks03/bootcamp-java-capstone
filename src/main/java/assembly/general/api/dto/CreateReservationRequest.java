@@ -12,8 +12,6 @@ public class CreateReservationRequest {
     @NotNull(message = "bookId is required")
     private UUID bookId;
 
-    public CreateReservationRequest() {}
-
     public CreateReservationRequest(UUID bookId){
         this.bookId = bookId;
     }

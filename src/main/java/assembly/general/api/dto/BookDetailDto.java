@@ -25,8 +25,6 @@ public class BookDetailDto {
     private Instant createdAt;
     private Instant updatedAt;
 
-    public BookDetailDto() {}
-
     public BookDetailDto(
             UUID bookId,
             String isbn,

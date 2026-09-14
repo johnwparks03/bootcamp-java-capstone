@@ -36,8 +36,6 @@ public class RegisterRequest {
     @NotNull(message = "Role is required")
     private Role role;
 
-    public RegisterRequest() {}
-
     public RegisterRequest(
             String email,
             String password,

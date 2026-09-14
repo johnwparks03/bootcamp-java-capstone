@@ -21,8 +21,6 @@ public class RegisterResponse {
     private Instant createdAt;
     private String message;
 
-    public RegisterResponse() {}
-
     public  RegisterResponse(
             UUID userId,
             String email,
