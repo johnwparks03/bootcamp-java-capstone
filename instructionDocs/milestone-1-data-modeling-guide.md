@@ -161,5 +161,5 @@ Based on the API contracts, your entities must support the following data:
 ## Resources
 
 - Refer to `user-stories.md` for detailed functional requirements
-- Refer to `api-contracts.md` for the external API structure and required data fields
+- Refer to `api-endpoints.md` for the external API structure and required data fields
 - Refer to `dev-environment-setup.md` for local development setup

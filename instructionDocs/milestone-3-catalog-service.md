@@ -104,7 +104,7 @@ Implement logic that:
 
 ## API Endpoints to Implement
 
-Based on `api-contracts.md`, implement these endpoints:
+Based on `api-endpoints.md`, implement these endpoints:
 
 ### GET /api/catalog/books
 - **Access:** Public (no authentication)
@@ -167,5 +167,5 @@ Based on `api-contracts.md`, implement these endpoints:
 ## Resources
 
 - Refer to `user-stories.md` for US-004, US-005, US-006 details
-- Refer to `api-contracts.md` for exact request/response formats
+- Refer to `api-endpoints.md` for exact request/response formats
 - Spring Data JPA documentation for pagination and query techniques

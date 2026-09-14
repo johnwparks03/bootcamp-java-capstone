@@ -246,6 +246,6 @@ Implement tests for boundary conditions:
 ## Resources
 
 - Refer to `user-stories.md` for all business requirements to test
-- Refer to `api-contracts.md` for API contract specifications
+- Refer to `api-endpoints.md` for API contract specifications
 - Spring Boot Testing documentation for framework guidance
 - JUnit and testing framework documentation

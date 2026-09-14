@@ -129,7 +129,7 @@ Implement endpoint that:
 
 ## API Endpoints to Implement
 
-Based on `api-contracts.md`, implement these endpoints:
+Based on `api-endpoints.md`, implement these endpoints:
 
 ### POST /api/reservations
 - **Access:** Requires authentication (PATRON or LIBRARIAN)
@@ -202,5 +202,5 @@ Based on `api-contracts.md`, implement these endpoints:
 ## Resources
 
 - Refer to `user-stories.md` for US-007, US-008, US-009, US-010, US-011 details
-- Refer to `api-contracts.md` for exact request/response formats
+- Refer to `api-endpoints.md` for exact request/response formats
 - Java Time API documentation for date/time calculations

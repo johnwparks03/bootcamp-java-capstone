@@ -247,5 +247,5 @@ If deployment fails or application doesn't work:
 ## Resources
 
 - Refer to `user-stories.md` for all functionality to verify in production
-- Refer to `api-contracts.md` for endpoint testing
+- Refer to `api-endpoints.md` for endpoint testing
 - Refer to `production-enviroment-setup.md` for production setup

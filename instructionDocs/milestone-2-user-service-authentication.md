@@ -108,7 +108,7 @@ Set up interactive API documentation that:
 
 ## API Endpoints to Implement
 
-Based on `api-contracts.md`, implement these endpoints:
+Based on `api-endpoints.md`, implement these endpoints:
 
 ### POST /api/auth/register
 - **Access:** Public
@@ -171,5 +171,5 @@ Based on `api-contracts.md`, implement these endpoints:
 ## Resources
 
 - Refer to `user-stories.md` for US-001, US-002, US-003 details
-- Refer to `api-contracts.md` for exact request/response formats
+- Refer to `api-endpoints.md` for exact request/response formats
 - Spring Security documentation for implementation guidance
