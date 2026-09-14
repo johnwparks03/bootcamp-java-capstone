@@ -115,3 +115,7 @@ Because of this I fixed the active spring profile to 'dev' and set the JWT secre
 - Utilize the Swagger UI for API documentation and testing
 - Implemented endpoints with JWT authentication and role-based access
 - Clear folder structure representing separation of concerns
+
+## Attempted, but not fully implemented
+
+- I attempted to transform all appropriate classes into records, but I could not finish it in time
