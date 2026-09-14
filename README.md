@@ -73,7 +73,7 @@ See **[API documentation](docs/api-endpoints.md)** for further documentation
 Also see Swagger documentation for an interactive view of available endpoints
 
 - **Local Swagger UI:** `http://localhost:8080/swagger-ui/index.html`
-- 
+
 ---
 
 ## Technical Quality
@@ -94,3 +94,24 @@ Also see Swagger documentation for an interactive view of available endpoints
 - Late fee calculation is accurate and tested
 - Pagination and search is functional and allows users to search for books
 
+## Deployment Issues
+
+I was unable to deploy to AWS production due to errors creating applications on Elastic Beanstalk and creating a database on RDS. The exact errors are shown below.
+
+![img.png](docs/elasticBeanstalkError.png)
+
+![img.png](docs/rdsError.png)
+
+Because of this I fixed the active spring profile to 'dev' and set the JWT secret token to ensure the API can be tested locally easily.
+
+## Highlights of what I Implemented
+
+- All 10 API endpoints
+- Cucumber unit tests for all endpoints
+  - Achieved 85% code coverage
+- Implemented exception handling with a Global Exception handler
+  - Created custom exceptions based on API endpoint and specific error messages
+- Initialized the repository with test data using data seeders for each entity
+- Utilize the Swagger UI for API documentation and testing
+- Implemented endpoints with JWT authentication and role-based access
+- Clear folder structure representing separation of concerns
