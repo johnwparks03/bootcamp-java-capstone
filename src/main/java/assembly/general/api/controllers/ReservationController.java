@@ -3,6 +3,8 @@ package assembly.general.api.controllers;
 import assembly.general.api.dto.*;
 import assembly.general.api.service.ReservationService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/api/reservations")
+@Validated
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -54,6 +57,19 @@ public class ReservationController {
         UUID userId = UUID.fromString(authentication.getName());
 
         ReturnResponse response = reservationService.returnBook(userId, reservationId, request);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/history")
+    public ResponseEntity<ReservationHistoryResponse> getHistory(
+            Authentication authentication,
+            @RequestParam(defaultValue = "0") @Min(0) Integer page,
+            @RequestParam(defaultValue = "20") @Min(1) @Max(100) Integer size
+    ){
+        UUID userId = UUID.fromString(authentication.getName());
+
+        ReservationHistoryResponse response = reservationService.getHistory(userId, page, size);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

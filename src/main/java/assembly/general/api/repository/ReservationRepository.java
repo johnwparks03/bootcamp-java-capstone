@@ -1,6 +1,8 @@
 package assembly.general.api.repository;
 
 import assembly.general.api.entity.Reservation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -34,4 +36,13 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
       AND r.status IN ('RETURNED')
     """)
     Long getUserBorrowingHistoryCount(@Param("userId") UUID userId);
+
+    @Query("""
+    SELECT r
+    FROM Reservation r
+    WHERE r.user.id =:userId
+        AND r.status IN ('RETURNED', 'CANCELLED')
+    ORDER BY COALESCE(r.returnedAt, r.reservedAt) DESC
+    """)
+    Page<Reservation> getUserHistory(@Param("userId") UUID userId, Pageable pageable);
 }

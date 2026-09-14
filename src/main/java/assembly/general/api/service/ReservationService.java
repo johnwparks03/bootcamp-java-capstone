@@ -6,6 +6,10 @@ import assembly.general.api.exception.*;
 import assembly.general.api.repository.BookRepository;
 import assembly.general.api.repository.ReservationRepository;
 import assembly.general.api.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -210,5 +214,44 @@ public class ReservationService {
             );
         }
 
+    }
+
+    public ReservationHistoryResponse getHistory(UUID userId, Integer page, Integer size){
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isEmpty()){
+            throw new RuntimeException();
+        }
+        User user = userOpt.get();
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size
+        );
+
+        Page<Reservation> reservationsPage = reservationRepository.getUserHistory(userId, pageable);
+
+        List<ReservationDetailDto> reservationDtos = reservationsPage.stream().map(this::convertReservationToReservationDetailDto).toList();
+
+        return new ReservationHistoryResponse(
+                reservationDtos,
+                reservationsPage.getNumber(),
+                reservationsPage.getSize(),
+                reservationsPage.getTotalElements(),
+                reservationsPage.getTotalPages(),
+                reservationsPage.isLast()
+        );
+    }
+
+    private ReservationDetailDto convertReservationToReservationDetailDto(Reservation reservation){
+        return new ReservationDetailDto(
+                reservation.getId(),
+                reservation.getBook().getTitle(),
+                reservation.getBook().getAuthor(),
+                reservation.getReservedAt(),
+                reservation.getCheckedOutAt(),
+                reservation.getReturnedAt(),
+                reservation.getDueDate(),
+                reservation.getStatus()
+        );
     }
 }
