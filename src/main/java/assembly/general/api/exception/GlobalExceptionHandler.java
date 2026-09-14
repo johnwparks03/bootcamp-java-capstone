@@ -23,6 +23,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
+    @ExceptionHandler(ReservationNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleReservationNotFound(ReservationNotFoundException exception){
+        ErrorResponse response = new ErrorResponse(
+                "NOT_FOUND",
+                exception.getMessage(),
+                Instant.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
     @ExceptionHandler(ReservationLimitExceededException.class)
     public ResponseEntity<ReservationLimitExceededErrorResponse> handleReservationLimitExceeded(ReservationLimitExceededException exception){
         ReservationLimitExceededErrorResponse response = new ReservationLimitExceededErrorResponse(

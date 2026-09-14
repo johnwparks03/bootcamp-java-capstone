@@ -1,18 +1,14 @@
 package assembly.general.api.controllers;
 
-import assembly.general.api.dto.CreateReservationRequest;
-import assembly.general.api.dto.CreateReservationResponse;
-import assembly.general.api.dto.ReservationsResponse;
+import assembly.general.api.dto.*;
 import assembly.general.api.service.ReservationService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -42,5 +38,14 @@ public class ReservationController {
         CreateReservationResponse response = reservationService.createReservation(userId, request.getBookId());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/{reservationId}/checkout")
+    public ResponseEntity<CheckoutResponse> checkoutReservation(Authentication authentication, @PathVariable UUID reservationId, @Valid @RequestBody CheckoutRequest request){
+        UUID userId = UUID.fromString(authentication.getName());
+
+        CheckoutResponse response = reservationService.checkoutReservation(userId, reservationId, request);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

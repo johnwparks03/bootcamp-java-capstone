@@ -1,13 +1,8 @@
 package assembly.general.api.service;
 
 import assembly.general.api.dto.*;
-import assembly.general.api.entity.Book;
-import assembly.general.api.entity.Reservation;
-import assembly.general.api.entity.ReservationStatus;
-import assembly.general.api.entity.User;
-import assembly.general.api.exception.BookNotFoundException;
-import assembly.general.api.exception.BookUnavailableException;
-import assembly.general.api.exception.ReservationLimitExceededException;
+import assembly.general.api.entity.*;
+import assembly.general.api.exception.*;
 import assembly.general.api.repository.BookRepository;
 import assembly.general.api.repository.ReservationRepository;
 import assembly.general.api.repository.UserRepository;
@@ -114,5 +109,42 @@ public class ReservationService {
                     reservation.getDueDate()
             );
         }
+    }
+
+    public CheckoutResponse checkoutReservation(UUID userId, UUID reservationId, CheckoutRequest request){
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isEmpty()){
+            throw new RuntimeException();
+        }
+        User user = userOpt.get();
+
+        if(user.getRole() != Role.LIBRARIAN){
+            throw new ForbiddenNotLibrarianException();
+        }
+
+        Optional<Reservation> reservationOpt = reservationRepository.findById(reservationId);
+        if(reservationOpt.isEmpty()){
+            throw new ReservationNotFoundException(reservationId);
+        }
+        Reservation reservation = reservationOpt.get();
+
+        if(reservation.getStatus() != ReservationStatus.RESERVED){
+            throw new InvalidReservationStatusAtCheckoutException(reservation.getStatus());
+        }
+
+        reservation.setStatus(ReservationStatus.CHECKED_OUT);
+        reservation.setCheckedOutAt(LocalDateTime.now());
+        reservation.setDueDate(LocalDateTime.now().plusDays(14));
+        if(!request.getNotes().isEmpty()){
+            reservation.setNotes(request.getNotes());
+        }
+        reservation = reservationRepository.save(reservation);
+
+        return new CheckoutResponse(
+                reservation.getId(),
+                reservation.getStatus(),
+                reservation.getCheckedOutAt(),
+                reservation.getDueDate()
+        );
     }
 }
