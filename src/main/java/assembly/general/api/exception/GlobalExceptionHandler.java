@@ -96,7 +96,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleEmailAlreadyExists(EmailAlreadyExistsException exception) {
         ErrorResponse response = new ErrorResponse(
-                "BAD_REQUEST",
+                "VALIDATION_ERROR",
                 exception.getMessage(),
                 Instant.now()
         );
